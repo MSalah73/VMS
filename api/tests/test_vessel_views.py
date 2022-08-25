@@ -46,6 +46,13 @@ class VesselViewsTest(APITestCase):
         self.assertTrue(self.uppercaseAddPayload.items()
                         <= res.data['data'].items())
 
+    def test_add_existing_vessel(self):
+        self.user_login(self.user1)
+        res = self.client.post(self.addVessel, self.addPayload)
+        res = self.client.post(self.addVessel, self.addPayload)
+
+        self.assertEqual(res.status_code, status.HTTP_409_CONFLICT)
+
     def test_add_vessel_unauthorized(self):
         res = self.client.post(self.addVessel, self.addPayload)
 
