@@ -5,6 +5,7 @@ from api.models import Vessel, User
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils.crypto import get_random_string
 from django.forms.models import model_to_dict
+import time
 
 
 class VesselViewsTest(APITestCase):
@@ -97,11 +98,13 @@ class VesselViewsTest(APITestCase):
         self.assertTrue(self.uppercaseAddPayload.items()
                         <= res.data['data'].items())
 
-    def test_update_vessel(self):
+    def test_update_vessel_with_duplicate_naccs_code(self):
         self.user_login(self.user1)
-        vessel = self.addRandomVessel(self.user1)
-        payload = self.getPayloatFromVessel(vessel)
-        self.updateURLWithId(vessel.id, 'update')
+        vessel1 = self.addRandomVessel(self.user1)
+        vessel2 = self.addRandomVessel(self.user1)
+
+        payload = self.getPayloatFromVessel(vessel1)
+        self.updateURLWithId(vessel2.id, 'update')
         res = self.client.put(self.updateVessel, payload)
 
         self.assertEqual(res.status_code, status.HTTP_409_CONFLICT)
@@ -172,7 +175,7 @@ class VesselViewsTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data['count'], 1)
 
-    def test_lookuo_a_vessel_from_user_vessel(self):
+    def test_lookup_a_vessel_from_user_vessel(self):
         self.user_login(self.user1)
         self.addRandomVessel(self.user1)
         vessel = self.addRandomVessel(self.user1)
@@ -184,7 +187,7 @@ class VesselViewsTest(APITestCase):
         self.assertTrue(model_to_dict(vessel).items()
                         <= res.data['data'].items())
 
-    def test_lookuo_a_vessel_from_user_vessel_not_found(self):
+    def test_lookup_a_vessel_from_user_vessel_not_found(self):
         self.user_login(self.user1)
         vessel = self.addRandomVessel(self.user1)
         self.logout()
@@ -195,7 +198,7 @@ class VesselViewsTest(APITestCase):
         res = self.client.get(self.retrieveUserVessel)
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_lookuo_a_vessel_from_user_vessel_unauthorized(self):
+    def test_lookup_a_vessel_from_user_vessel_unauthorized(self):
         self.user_login(self.user1)
         vessel = self.addRandomVessel(self.user1)
         self.logout()

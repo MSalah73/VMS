@@ -1,3 +1,5 @@
+from django.db.utils import IntegrityError
+from rest_framework.exceptions import ValidationError
 from django.http import QueryDict
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -101,7 +103,6 @@ def addVessel(request):
 def updateVessel(request, id):
     try:
         vessel = Vessel.objects.get(id=id)
-
         if vessel.owner.id != request.user.id:
             message = formatResponse(
                 message="You don't have permission to access this resource",
@@ -116,9 +117,18 @@ def updateVessel(request, id):
         message = formatResponse(data=serializer.data,
                                  status=status.HTTP_200_OK)
         return Response(message)
-    except Exception:
+    # not the write way to get conflict in the database - if I had time I would change the vessel
+    # model to handle this better
+    except (IntegrityError, ValidationError):
         message = formatResponse(
-            message="Resource not found",
+            message="Vessel with this NACCS code already exists",
+            status=status.HTTP_409_CONFLICT
+        )
+        return Response(message, status.HTTP_409_CONFLICT)
+    except Exception as e:
+        # not the proper way to handle this
+        message = formatResponse(
+            message=str(type(e))+" Resource not found",
             status=status.HTTP_404_NOT_FOUND
         )
         return Response(message, status.HTTP_404_NOT_FOUND)
