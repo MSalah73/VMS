@@ -48,8 +48,10 @@ class VesselViewsTest(APITestCase):
 
     def test_add_existing_vessel(self):
         self.user_login(self.user1)
-        res = self.client.post(self.addVessel, self.addPayload)
-        res = self.client.post(self.addVessel, self.addPayload)
+        vessel = self.addRandomVessel(self.user1)
+        payload = self.getPayloatFromVessel(vessel)
+
+        res = self.client.post(self.addVessel, payload)
 
         self.assertEqual(res.status_code, status.HTTP_409_CONFLICT)
 
@@ -207,6 +209,12 @@ class VesselViewsTest(APITestCase):
             naccs_code=get_random_string(length=5),
             owner=user
         )
+
+    def getPayloatFromVessel(self, vessel):
+        return {
+            "name": vessel.name,
+            "naccs_code": vessel.naccs_code
+        }
 
     def updateURLWithId(self, id, method):
         if method == 'get':

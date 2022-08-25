@@ -78,16 +78,22 @@ def retrieveUserVessel(request, id):
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def addVessel(request):
-    data = QueryDict.fromkeys(['owner'], value=request.user.id, mutable=True)
-    data.update(request.data)
-    serializer = VesselsSerializer(data=data)
+    try:
+        data = QueryDict.fromkeys(
+            ['owner'], value=request.user.id, mutable=True)
+        data.update(request.data)
+        serializer = VesselsSerializer(data=data)
 
-    if serializer.is_valid(raise_exception=True):
-        serializer.save()
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
 
-    message = formatResponse(data=serializer.data,
-                             status=status.HTTP_201_CREATED)
-    return Response(message, status=status.HTTP_201_CREATED)
+        message = formatResponse(data=serializer.data,
+                                 status=status.HTTP_201_CREATED)
+        return Response(message, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        message = formatResponse(message="Vessel with this NACCS code already exists",
+                                 status=status.HTTP_409_CONFLICT)
+        return Response(message, status=status.HTTP_409_CONFLICT)
 
 
 @api_view(["PUT"])
