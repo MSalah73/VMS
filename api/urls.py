@@ -5,11 +5,12 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+# Due to the nature of path - the order here matters
 urlpatterns = [
     # Vessels api
     path('', views.getRoutes),
-    path('vessels/', views.getUserVessels, name='view-user-vessels'),
-    path('vessels/all', views.getVessels, name='view-all-vessels'),
+    path('vessels/', views.retrieveUserVessels, name='retrieve-user-vessels'),
+    path('vessels/all', views.retrieveVessels, name='retrieve-all-vessels'),
     path('vessels/add', views.addVessel, name='add-vessel'),
     path('vessels/<str:id>', views.retrieveUserVessel, name='retrieve-vessel'),
     path('vessels/update/<str:id>', views.updateVessel, name='update-vessel'),

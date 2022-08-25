@@ -13,8 +13,8 @@ class VesselViewsTest(APITestCase):
         self.client = APIClient()
 
         # Setup urls
-        self.getVessels = reverse('view-all-vessels')
-        self.getUserVessels = reverse('view-user-vessels')
+        self.retrieveVessels = reverse('retrieve-all-vessels')
+        self.retrieveUserVessels = reverse('retrieve-user-vessels')
         self.retriveUserVessel = ''
         self.addVessel = reverse('add-vessel')
         self.updateVessel = ''
@@ -139,7 +139,7 @@ class VesselViewsTest(APITestCase):
     ################ Get Vessels ################
 
     def test_get_all_vessel_list(self):
-        res = self.client.get(self.getVessels)
+        res = self.client.get(self.retrieveVessels)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
@@ -150,7 +150,7 @@ class VesselViewsTest(APITestCase):
         self.user_login(self.user2)
         self.addRandomVessel(self.user2)
 
-        res = self.client.get(self.getUserVessels)
+        res = self.client.get(self.retrieveUserVessels)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data['count'], 1)
 

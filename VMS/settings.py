@@ -118,7 +118,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 12,
+    'PAGE_SIZE': 10,
 }
 
 SIMPLE_JWT = {
@@ -129,7 +129,7 @@ SIMPLE_JWT = {
     'UPDATE_LAST_LOGIN': False,
 
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
+    'SIGNING_KEY': "123",
     'VERIFYING_KEY': None,
     'AUDIENCE': None,
     'ISSUER': None,

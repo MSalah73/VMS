@@ -1,6 +1,5 @@
-import uu
 from django.test import TestCase
-from api.models import Vessel, User
+from api.models import User
 import uuid
 
 
