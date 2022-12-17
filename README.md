@@ -1,4 +1,4 @@
-# Shippio backend API assignment
+#  A simple backend using the Django Rest Framework 
 
 #### Prerequisites
 
