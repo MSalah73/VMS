@@ -1,0 +1,666 @@
+{
+	"info": {
+		"_postman_id": "a1bf311e-4141-4cc9-81d0-43da3a7bc234",
+		"name": "VMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Vessels",
+			"item": [
+				{
+					"name": "Retrieve all vessels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/vessels/all?page=1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"vessels",
+								"all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve all user's vessels",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{{{generic_username}}_1_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/vessels/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"vessels",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a user's vessel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{{{generic_username}}_1_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/vessels/{{most_recent_added_vessel}}",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"vessels",
+								"{{most_recent_added_vessel}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a vessel",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"most_recent_added_vessel\", jsonData.data.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{{{generic_username}}_1_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Vessel_1",
+									"type": "text"
+								},
+								{
+									"key": "naccs_code",
+									"value": "Naccs_1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/vessels/add",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"vessels",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a vessel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{{{generic_username}}_1_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "VESSEL_2",
+									"type": "text"
+								},
+								{
+									"key": "naccs_code",
+									"value": "NACCS_2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/vessels/update/{{most_recent_added_vessel}}?name=Vessel_2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"vessels",
+								"update",
+								"{{most_recent_added_vessel}}"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Vessel_2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a vessel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{{{generic_username}}_1_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/vessels/remove/{{most_recent_added_vessel}}",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"vessels",
+								"remove",
+								"{{most_recent_added_vessel}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "admin ",
+					"item": [
+						{
+							"name": "get csrf token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set('X-CSRFToken', pm.cookies.get('csrftoken'))"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "{{admin_username}}",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "{{admin_password}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/admin/login/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"admin",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get csrf token Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-CSRFToken",
+										"value": "{{X-CSRFToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "shippio123",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/admin/login/?next=/admin/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"admin",
+										"login",
+										""
+									],
+									"query": [
+										{
+											"key": "next",
+											"value": "/admin/"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Add users",
+					"item": [
+						{
+							"name": "Get csrfmiddlewaretoken token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"responseHTML = cheerio(pm.response.text());\r",
+											"\r",
+											"let token = responseHTML.find('[name=\"csrfmiddlewaretoken\"]').val();\r",
+											"pm.environment.set(\"UserFormCSRFToekn\", token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "shippio123",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/admin/api/user/add/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"admin",
+										"api",
+										"user",
+										"add",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let id = pm.info.iteration + 1;\r",
+											"pm.environment.set(\"loop_value\", id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "t3XaWduz8Inx5SzTl98h5eHkCXZq2dChe7Ek31RYtAeKVjXKAxBiMPOlhlt4O4Da",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "X-CSRFToken",
+										"value": "iiebEV1bOjG0v1NXaVVE7FXs1Xalk4YZ3mVlLJoA9bxdlsbOpjoFOg4tGlEZ6VZS",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Cookie",
+										"value": "sessionid=pbkpgn941i2hcspgrg272cjo4b02grjv",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "csrfmiddlewaretoken",
+											"value": "{{UserFormCSRFToekn}}",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "{{generic_username}}_{{loop_value}}",
+											"type": "text"
+										},
+										{
+											"key": "password1",
+											"value": "{{generic_user_password}}",
+											"type": "text"
+										},
+										{
+											"key": "password2",
+											"value": "{{generic_user_password}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/admin/api/user/add/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"admin",
+										"api",
+										"user",
+										"add",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get users ids",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"responseHTML = cheerio(pm.response.text());\r",
+									"\r",
+									"let userIds = responseHTML.find('[name=\"_selected_action\"]').val();\r",
+									"\r",
+									"let re_id = /(\\w+-){4}\\w+/;\r",
+									"let generic_username = environment[\"generic_username\"];\r",
+									"let re_user = new RegExp(generic_username+\"_\\d\");\r",
+									"\r",
+									"responseHTML.find('.field-username').each( (_,elem) => {\r",
+									"    if (re_user.test(elem.children.first().children.first().data)) {\r",
+									"        pm.environment.set(elem.children.first().children.first().data, elem.children.first().attribs.href.match(re_id)[0]);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/admin/api/user/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"admin",
+								"api",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = JSON.parse(responseBody);\r",
+									"let loop_value = environment[\"loop_value\"];\r",
+									"let generic_username = environment[\"generic_username\"];\r",
+									"\r",
+									"envKey = generic_username+\"_\"+ loop_value +\"_token\";\r",
+									"postman.setEnvironmentVariable(envKey, jsonData.access);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let id = pm.info.iteration + 1;\r",
+									"pm.environment.set(\"loop_value\", id);\r",
+									"console.log(id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{generic_username}}_{{loop_value}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{generic_user_password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/token/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
